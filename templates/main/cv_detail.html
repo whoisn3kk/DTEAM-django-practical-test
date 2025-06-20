@@ -34,6 +34,7 @@
         </div>
         <div class="card-footer">
              <a href="{% url 'cv_list' %}" class="btn btn-secondary">Back to list</a>
+             <a href="{% url 'cv_pdf' cv.pk %}" class="btn btn-primary">Download PDF</a>
         </div>
     </div>
 {% endblock %}
