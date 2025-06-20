@@ -6,6 +6,9 @@ from django.template.loader import get_template
 from io import BytesIO
 import pdfkit
 
+from rest_framework import generics
+from main.serializers import *
+
 # Create your views here.
 
 class CVListView(ListView):
@@ -35,3 +38,12 @@ def gen_cv_pdf(request:HttpRequest, pk:int):
     response['Content-Disposition'] = f'attachment; filename="CV_{cv.pk}.pdf"'
 
     return response
+
+
+class CVRUAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CVSerializer
+    queryset = CV.objects.all()
+
+class CVLCAPIView(generics.ListCreateAPIView):
+    serializer_class = CVSerializer
+    queryset = CV.objects.all()
