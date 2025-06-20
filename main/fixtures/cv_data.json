@@ -1,0 +1,39 @@
+[
+  {
+    "model": "main.skill",
+    "pk": 1,
+    "fields": {
+      "name": "Python"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 2,
+    "fields": {
+      "name": "Django"
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 1,
+    "fields": {
+      "name": "E-commerce Website",
+      "description": "A full-featured e-commerce platform built with Django."
+    }
+  },
+  {
+    "model": "main.cv",
+    "pk": 1,
+    "fields": {
+      "firstname": "John",
+      "lastname": "Doe",
+      "bio": "Experienced Django developer with a passion for building scalable web applications.",
+      "contacts": {
+        "email": "john.doe@example.com",
+        "linkedin": "linkedin.com/in/johndoe"
+      },
+      "skills": [1, 2],
+      "projects": [1]
+    }
+  }
+]
