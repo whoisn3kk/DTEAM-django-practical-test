@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ cv.firstname }} {{ cv.lastname }}</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Biography</h5>
+            <p class="card-text">{{ cv.bio }}</p>
+
+            <h5 class="card-title mt-4">Skills</h5>
+            <p>
+                {% for skill in cv.skills.all %}
+                    <span class="badge bg-primary">{{ skill.name }}</span>
+                {% endfor %}
+            </p>
+
+            <h5 class="card-title mt-4">Projects</h5>
+            <ul class="list-group">
+                {% for project in cv.projects.all %}
+                    <li class="list-group-item">
+                        <strong>{{ project.name }}</strong>: {{ project.description }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <h5 class="card-title mt-4">Contacts</h5>
+            <ul class="list-group">
+                {% for key, value in cv.contacts.items %}
+                    <li class="list-group-item">{{ key|capfirst }}: {{ value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="card-footer">
+             <a href="{% url 'cv_list' %}" class="btn btn-secondary">Back to list</a>
+        </div>
+    </div>
+{% endblock %}
