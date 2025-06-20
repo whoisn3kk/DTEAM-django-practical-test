@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from .models import *
 from django.http import HttpResponse, HttpRequest
 from django.template.loader import get_template
@@ -54,3 +54,7 @@ class RequestLogListView(ListView):
     template_name = 'main/request_log_list.html'
     context_object_name = 'logs'
     queryset = RequestLog.objects.order_by('-timestamp')[:10]
+
+
+class SettingsView(TemplateView):
+    template_name = 'main/settings.html'

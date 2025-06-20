@@ -10,4 +10,6 @@ urlpatterns = [
     path('api/cvs/<int:pk>/', CVRUAPIView.as_view(), name='api_cv_detail'),
 
     path('logs/', RequestLogListView.as_view(), name='request_log_list'),
+
+    path('settings/', SettingsView.as_view(), name='settings_page'),
 ]

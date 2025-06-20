@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Settings</h1>    
+    <ul class="list-group">
+        <li class="list-group-item"><strong>DEBUG:</strong> {{ settings.DEBUG }}</li> 
+        <li class="list-group-item"><strong>ALLOWED_HOSTS:</strong> {{ settings.ALLOWED_HOSTS }}</li>
+        <li class="list-group-item"><strong>TIME_ZONE:</strong> {{ settings.TIME_ZONE }}</li>
+    </ul>
+{% endblock %}
