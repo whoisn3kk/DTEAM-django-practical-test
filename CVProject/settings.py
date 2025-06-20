@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)v1g^(9^iklgqmye+s!pqm53+x^jia5dvofyc85u6u5qy!3x$6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'main.middleware.RequestLoggingMiddleware'
 ]
 
 ROOT_URLCONF = 'CVProject.urls'

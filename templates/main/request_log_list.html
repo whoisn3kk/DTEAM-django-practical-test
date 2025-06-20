@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Last 10 Requests</h1>
+    <ul class="list-group">
+        {% for log in logs %} 
+            <li class="list-group-item">
+                {{ log.timestamp }} - {{ log.ip_address }} - <strong>{{ log.method }}</strong> {{ log.path }} 
+            </li>
+        {% empty %}
+            <li class="list-group-item">No requests logged yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

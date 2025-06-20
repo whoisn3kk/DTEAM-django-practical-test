@@ -47,3 +47,10 @@ class CVRUAPIView(generics.RetrieveUpdateDestroyAPIView):
 class CVLCAPIView(generics.ListCreateAPIView):
     serializer_class = CVSerializer
     queryset = CV.objects.all()
+
+
+class RequestLogListView(ListView):
+    model = RequestLog
+    template_name = 'main/request_log_list.html'
+    context_object_name = 'logs'
+    queryset = RequestLog.objects.order_by('-timestamp')[:10]

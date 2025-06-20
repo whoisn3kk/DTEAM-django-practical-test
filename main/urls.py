@@ -8,4 +8,6 @@ urlpatterns = [
 
     path('api/cvs/', CVLCAPIView.as_view(), name='api_cv_list'),
     path('api/cvs/<int:pk>/', CVRUAPIView.as_view(), name='api_cv_detail'),
+
+    path('logs/', RequestLogListView.as_view(), name='request_log_list'),
 ]
