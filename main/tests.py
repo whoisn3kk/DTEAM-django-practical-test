@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 from .models import *
+from rest_framework.test import APITestCase
+from rest_framework import status
 
 # Create your tests here.
 
@@ -49,3 +51,49 @@ class CVViewsTest(TestCase):
         # contact
         self.assertContains(response, 'Testcontact: test@test.test') 
         
+
+
+class CVAPITest(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.cv = CV.objects.create(firstname="API", lastname="user", bio="test")
+
+    def test_create_cv(self):
+        url = reverse('api_cv_list') 
+        data = {'firstname': 'new', 'lastname': 'lastname', 'bio': 'test bio 2'}
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(CV.objects.count(), 2)
+        self.assertEqual(CV.objects.get(id=response.data['id']).firstname, 'new') # type:ignore
+
+    def test_list_cvs(self):
+        url = reverse('api_cv_list')
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1) # type:ignore
+
+    def test_retrieve_cv(self):
+        url = reverse('api_cv_detail', args=[self.cv.pk])
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['firstname'], 'API') # type:ignore
+
+    def test_update_cv(self):
+        url = reverse('api_cv_detail', args=[self.cv.pk])
+        data = {'firstname': 'updated', 'lastname': 'User', 'bio': 'updated Bio'}
+        response = self.client.put(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.cv.refresh_from_db()
+        self.assertEqual(self.cv.firstname, 'updated')
+
+    def test_delete_cv(self):
+        url = reverse('api_cv_detail', args=[self.cv.pk])
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(CV.objects.count(), 0)
