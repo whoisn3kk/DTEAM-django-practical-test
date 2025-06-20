@@ -97,3 +97,26 @@ class CVAPITest(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(CV.objects.count(), 0)
+
+
+class LoggingTest(TestCase):
+
+    def test_create_log(self):
+        self.assertEqual(RequestLog.objects.count(), 0)
+        url = reverse('request_log_list')
+        self.client.get(url)
+        self.assertEqual(RequestLog.objects.count(), 1)
+
+        self.client.post(url)
+        self.assertEqual(RequestLog.objects.count(), 2)
+
+        first_log = RequestLog.objects.first()
+
+        self.assertEqual(first_log.method, "GET") #type: ignore
+        self.assertEqual(first_log.path, url) #type: ignore
+
+        last_log = RequestLog.objects.last()
+
+        self.assertEqual(last_log.method, "POST") #type: ignore
+        self.assertEqual(last_log.path, url) #type: ignore
+
