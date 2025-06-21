@@ -27,6 +27,9 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
+CSRF_TRUSTED_ORIGINS = list(map(lambda x: f"https://{x}", os.environ.get('ALLOWED_HOSTS', '').split(',')))
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
