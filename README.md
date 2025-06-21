@@ -22,6 +22,8 @@ POSTGRES_USER=
 POSTGRES_PASSWORD=
 
 CELERY_BROKER_URL=redis://redis:6379/0
+
+OPENAI_API_KEY=
 ```
 
 ### Run docker container and load test data

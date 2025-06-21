@@ -39,10 +39,23 @@
                     <button class="btn btn-success" type="submit">Send</button>
                 </div>
             </form>
-        </div>
-        <div class="card-footer">
-             <a href="{% url 'cv_list' %}" class="btn btn-secondary">Back to list</a>
-             <a href="{% url 'cv_pdf' cv.pk %}" class="btn btn-primary">Download PDF</a>
+            <h5 class="card-title mt-4">Translate CV with AI</h5>
+            <form action="{% url 'cv_translate' cv.pk %}" method="post">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <select class="form-select" name="language" required>
+                        <option value="" disabled selected>Choose language...</option>
+                        {% for value, name in languages %}
+                            <option value="{{ value }}">{{ name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-info" type="submit">Translate</button>
+                </div>
+            </form>
+            <div class="card-footer">
+                 <a href="{% url 'cv_list' %}" class="btn btn-secondary">Back to list</a>
+                 <a href="{% url 'cv_pdf' cv.pk %}" class="btn btn-primary">Download PDF</a>
+            </div>
         </div>
     </div>
 {% endblock %}
