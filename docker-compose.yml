@@ -1,6 +1,9 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:latest
+
   db:
     image: postgres:latest
     volumes:
@@ -9,6 +12,16 @@ services:
       - ./.env
     ports:
       - "5432:5432"
+
+  migrate:
+    build: .
+    command: poetry run python manage.py migrate
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - db
 
   web:
     build: .
@@ -20,7 +33,23 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - db
+      migrate:
+        condition: service_completed_successfully
+
+
+
+  celery_worker:
+    build: .
+    command: poetry run celery -A CVProject worker -l info
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
 
 volumes:
   postgres_data:
