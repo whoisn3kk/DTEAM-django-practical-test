@@ -1,7 +1,10 @@
+from typing import Any
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
+
+from main.tasks import send_email
 from .models import *
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.template.loader import get_template
 from io import BytesIO
 import pdfkit
@@ -25,6 +28,15 @@ class CVDetailView(DetailView):
 
     def get_queryset(self):
         return super().get_queryset().prefetch_related('skills', 'projects')
+    
+    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        email = request.POST.get('email')
+        if email:
+            cv = self.get_object()
+            send_email.delay(cv.pk, email)
+            return HttpResponseRedirect(request.path_info)
+        
+        return super().get(request, *args, **kwargs)
 
 def gen_cv_pdf(request:HttpRequest, pk:int):
     cv = CV.objects.get(pk=pk)

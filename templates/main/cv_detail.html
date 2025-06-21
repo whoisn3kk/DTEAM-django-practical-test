@@ -31,6 +31,14 @@
                     <li class="list-group-item">{{ key|capfirst }}: {{ value }}</li>
                 {% endfor %}
             </ul>
+            <h5 class="card-title mt-4">Send PDF to Email</h5>
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <button class="btn btn-success" type="submit">Send</button>
+                </div>
+            </form>
         </div>
         <div class="card-footer">
              <a href="{% url 'cv_list' %}" class="btn btn-secondary">Back to list</a>
